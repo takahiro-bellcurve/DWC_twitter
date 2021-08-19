@@ -38,15 +38,24 @@
         </tr>
       </table>
       <div class="comment-index">
+      <h5>comment</h5>
         <% @comments.each do |comment| %>
+        <div class="comment-box border-bottom d-flex align-items-center">
           <% comment_user = User.find(comment.user_id) %>
-          <%= link_to attachment_image_tag(comment_user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(comment_user) %>
-          <p class="d-inline-block w-100"><%= comment.comment %></p>
-          <% if comment_user == current_user %>
-            <%= link_to "Destroy", book_book_comment_path(@book.id,comment.id), method: "delete", class:"btn btn-danger" %>
-          <% end %>
-          <br> <%= link_to "#{comment_user.name}", user_path(comment_user) %> <br>
-        <% end %>  
+          <div class="user-info">
+             <%= link_to attachment_image_tag(comment_user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size: "40x40"),user_path(comment_user) %><br>
+             <%= link_to "#{comment_user.name}", user_path(comment_user) %>
+          </div>
+          <div class="content">
+            <p><%= comment.comment %></p>
+          </div>
+          <div class="destroy ml-auto">
+            <% if comment_user == current_user %>
+              <%= link_to "Destroy", book_book_comment_path(@book.id,comment.id), method: "delete", class:"btn btn-danger" %>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
       </div>
       <div class="comment-area">
         <div class="new-comment">
